@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-unicode(r"""
+str(r"""
 WikiCreole to HTML converter
 This program is an example of how the creole.py WikiCreole parser
 can be used.
@@ -179,44 +179,44 @@ class HtmlEmitter(object):
         return self.html_escape(node.content)
 
     def separator_emit(self, node):
-        return u'<hr>';
+        return '<hr>';
 
     def paragraph_emit(self, node):
-        return u'<p>%s</p>\n' % self.emit_children(node)
+        return '<p>%s</p>\n' % self.emit_children(node)
 
     def bullet_list_emit(self, node):
-        return u'<ul>\n%s</ul>\n' % self.emit_children(node)
+        return '<ul>\n%s</ul>\n' % self.emit_children(node)
 
     def number_list_emit(self, node):
-        return u'<ol>\n%s</ol>\n' % self.emit_children(node)
+        return '<ol>\n%s</ol>\n' % self.emit_children(node)
 
     def list_item_emit(self, node):
-        return u'<li>%s</li>\n' % self.emit_children(node)
+        return '<li>%s</li>\n' % self.emit_children(node)
 
     def table_emit(self, node):
-        return u'<table>\n%s</table>\n' % self.emit_children(node)
+        return '<table>\n%s</table>\n' % self.emit_children(node)
 
     def table_row_emit(self, node):
-        return u'<tr>%s</tr>\n' % self.emit_children(node)
+        return '<tr>%s</tr>\n' % self.emit_children(node)
 
     def table_cell_emit(self, node):
-        return u'<td>%s</td>' % self.emit_children(node)
+        return '<td>%s</td>' % self.emit_children(node)
 
     def table_head_emit(self, node):
-        return u'<th>%s</th>' % self.emit_children(node)
+        return '<th>%s</th>' % self.emit_children(node)
 
     def emphasis_emit(self, node):
-        return u'<i>%s</i>' % self.emit_children(node)
+        return '<i>%s</i>' % self.emit_children(node)
 
     def strong_emit(self, node):
-        return u'<b>%s</b>' % self.emit_children(node)
+        return '<b>%s</b>' % self.emit_children(node)
 
     def header_emit(self, node):
-        return u'<h%d>%s</h%d>\n' % (
+        return '<h%d>%s</h%d>\n' % (
             node.level, self.html_escape(node.content), node.level)
 
     def code_emit(self, node):
-        return u'<tt>%s</tt>' % self.html_escape(node.content)
+        return '<tt>%s</tt>' % self.html_escape(node.content)
 
     def link_emit(self, node):
         target = node.content
@@ -227,11 +227,11 @@ class HtmlEmitter(object):
         m = self.link_rules.addr_re.match(target)
         if m:
             if m.group('extern_addr'):
-                return u'<a href="%s">%s</a>' % (
+                return '<a href="%s">%s</a>' % (
                     self.attr_escape(target), inside)
             elif m.group('inter_wiki'):
                 raise NotImplementedError
-        return u'<a href="%s">%s</a>' % (
+        return '<a href="%s">%s</a>' % (
             self.attr_escape(target), inside)
 
     def image_emit(self, node):
@@ -240,21 +240,21 @@ class HtmlEmitter(object):
         m = self.link_rules.addr_re.match(target)
         if m:
             if m.group('extern_addr'):
-                return u'<img src="%s" alt="%s">' % (
+                return '<img src="%s" alt="%s">' % (
                     self.attr_escape(target), self.attr_escape(text))
             elif m.group('inter_wiki'):
                 raise NotImplementedError
-        return u'<img src="%s" alt="%s">' % (
+        return '<img src="%s" alt="%s">' % (
             self.attr_escape(target), self.attr_escape(text))
 
     def macro_emit(self, node):
         raise NotImplementedError
 
     def break_emit(self, node):
-        return u"<br>"
+        return "<br>"
 
     def preformatted_emit(self, node):
-        return u"<pre>%s</pre>" % self.html_escape(node.content)
+        return "<pre>%s</pre>" % self.html_escape(node.content)
 
     def default_emit(self, node):
         """Fallback function for emitting unknown nodes."""
@@ -264,7 +264,7 @@ class HtmlEmitter(object):
     def emit_children(self, node):
         """Emit all the children of a node."""
 
-        return u''.join([self.emit_node(child) for child in node.children])
+        return ''.join([self.emit_node(child) for child in node.children])
 
     def emit_node(self, node):
         """Emit a single node."""
@@ -279,7 +279,7 @@ class HtmlEmitter(object):
 
 if __name__=="__main__":
     import sys
-    document = Parser(unicode(sys.stdin.read(), 'utf-8', 'ignore')).parse()
+    document = Parser(str(sys.stdin.read(), 'utf-8', 'ignore')).parse()
     sys.stdout.write(HtmlEmitter(document).emit().encode('utf-8', 'ignore'))
 
 

@@ -52,7 +52,7 @@ class Parser(object):
         else:
             # this url is escaped, we render it as text
             if self.text is None:
-                self.text = DocNode('text', self.cur, u'')
+                self.text = DocNode('text', self.cur, '')
             self.text.content += groups.get('url_target')
 
     def _link_repl(self, groups):
@@ -101,8 +101,8 @@ class Parser(object):
         DocNode('separator', self.cur)
 
     def _item_repl(self, groups):
-        bullet = groups.get('item_head', u'')
-        text = groups.get('item_text', u'')
+        bullet = groups.get('item_head', '')
+        text = groups.get('item_text', '')
         if bullet[-1] == '#':
             kind = 'number_list'
         else:
@@ -128,7 +128,7 @@ class Parser(object):
         self.text = None
 
     def _list_repl(self, groups):
-        text = groups.get('list', u'')
+        text = groups.get('list', '')
         self.parse_re(text, self.rules.item_re)
 
     def _head_repl(self, groups):
@@ -145,7 +145,7 @@ class Parser(object):
         if self.cur.kind in ('document', 'section', 'blockquote'):
             self.cur = DocNode('paragraph', self.cur)
         else:
-            text = u' ' + text
+            text = ' ' + text
         self.parse_inline(text)
         if groups.get('break') and self.cur.kind in ('paragraph',
             'emphasis', 'strong', 'code'):
@@ -172,7 +172,7 @@ class Parser(object):
             else:
                 cell = m.group('head')
                 self.cur = DocNode('table_head', tr)
-                self.text = DocNode('text', self.cur, u'')
+                self.text = DocNode('text', self.cur, '')
                 self.text.content = cell.strip('=')
         self.cur = tb
         self.text = None
@@ -180,7 +180,7 @@ class Parser(object):
     def _pre_repl(self, groups):
         self.cur = self._upto(self.cur, ('document', 'section', 'blockquote'))
         kind = groups.get('pre_kind', None)
-        text = groups.get('pre_text', u'')
+        text = groups.get('pre_text', '')
         def remove_tilde(m):
             return m.group('indent') + m.group('rest')
         text = self.rules.pre_escape_re.sub(remove_tilde, text)
@@ -192,7 +192,7 @@ class Parser(object):
         self.cur = self._upto(self.cur, ('document', 'section', 'blockquote'))
 
     def _code_repl(self, groups):
-        DocNode('code', self.cur, groups.get('code_text', u'').strip())
+        DocNode('code', self.cur, groups.get('code_text', '').strip())
         self.text = None
 
     def _emph_repl(self, groups):
@@ -215,13 +215,13 @@ class Parser(object):
 
     def _escape_repl(self, groups):
         if self.text is None:
-            self.text = DocNode('text', self.cur, u'')
-        self.text.content += groups.get('escaped_char', u'')
+            self.text = DocNode('text', self.cur, '')
+        self.text.content += groups.get('escaped_char', '')
 
     def _char_repl(self, groups):
         if self.text is None:
-            self.text = DocNode('text', self.cur, u'')
-        self.text.content += groups.get('char', u'')
+            self.text = DocNode('text', self.cur, '')
+        self.text.content += groups.get('char', '')
 
     def parse_inline(self, raw):
         """Recognize inline elements inside blocks."""
@@ -233,7 +233,7 @@ class Parser(object):
 
         for match in rules_re.finditer(raw):
             groups = dict((k, v) for (k, v)
-                          in match.groupdict().iteritems()
+                          in match.groupdict().items()
                           if v is not None)
             name = match.lastgroup
             function = getattr(self, '_%s_repl' % name)

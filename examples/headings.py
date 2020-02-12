@@ -13,7 +13,7 @@ class HtmlEmitter(creole.HtmlEmitter):
     def header_emit(self, node):
         """Instead of using node.content, we emit the children."""
 
-        return u'<h%d>%s</h%d>\n' % (node.level, self.emit_children(node),
+        return '<h%d>%s</h%d>\n' % (node.level, self.emit_children(node),
                                      node.level)
 
 
