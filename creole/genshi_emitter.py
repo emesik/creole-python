@@ -74,13 +74,13 @@ modified by Radomir Dopieralski (MoinMoin:RadomirDopieralski).
 </ul>
 
 >>> parse(u'test //test test// test **test test** test')
-<p>test <i>test test</i> test <b>test test</b> test</p>
+<p>test <em>test test</em> test <strong>test test</strong> test</p>
 
 >>> parse(u'test //test **test// test** test')
-<p>test <i>test <b>test<i> test<b> test</b></i></b></i></p>
+<p>test <em>test <strong>test<em> test<strong> test</strong></em></strong></em></p>
 
 >>> parse(u'**test')
-<p><b>test</b></p>
+<p><strong>test</strong></p>
 
 >>> parse(u'|x|y|z|\n|a|b|c|\n|d|e|f|\ntest')
 <table>
@@ -203,10 +203,10 @@ class GenshiEmitter(object):
         return self.wrap('th', node)
 
     def emphasis_emit(self, node):
-        return self.wrap('i', node)
+        return self.wrap('em', node)
 
     def strong_emit(self, node):
-        return self.wrap('b', node)
+        return self.wrap('strong', node)
 
     def header_emit(self, node):
         yield START, (QName('h%d' % node.level), Attrs()), POS

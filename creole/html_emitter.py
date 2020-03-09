@@ -83,13 +83,13 @@ u'<p>test test</p>\n'
 </ul>
 
 >>> parse(u'test //test test// test **test test** test')
-<p>test <i>test test</i> test <b>test test</b> test</p>
+<p>test <em>test test</em> test <strong>test test</strong> test</p>
 
 >>> parse(u'test //test **test// test** test')
-<p>test <i>test <b>test<i> test<b> test</b></i></b></i></p>
+<p>test <em>test <strong>test<em> test<strong> test</strong></em></strong></em></p>
 
 >>> parse(u'**test')
-<p><b>test</b></p>
+<p><strong>test</strong></p>
 
 >>> parse(u'|x|y|z|\n|a|b|c|\n|d|e|f|\ntest')
 <table>
@@ -206,10 +206,10 @@ class HtmlEmitter(object):
         return '<th>%s</th>' % self.emit_children(node)
 
     def emphasis_emit(self, node):
-        return '<i>%s</i>' % self.emit_children(node)
+        return '<em>%s</em>' % self.emit_children(node)
 
     def strong_emit(self, node):
-        return '<b>%s</b>' % self.emit_children(node)
+        return '<strong>%s</strong>' % self.emit_children(node)
 
     def header_emit(self, node):
         return '<h%d>%s</h%d>\n' % (

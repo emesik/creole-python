@@ -43,7 +43,7 @@ class Parser(creole.Parser):
     <h3><a href="test">test</a></h3>
 
     >>> parse(u'==test //italic// **bold** test==')
-    <h2>test <i>italic</i> <b>bold</b> test</h2>
+    <h2>test <em>italic</em> <strong>bold</strong> test</h2>
 
     >>> parse(u'==test==\ntest')
     <h2>test</h2>
